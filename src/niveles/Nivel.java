@@ -1,22 +1,45 @@
 
 package niveles;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import peces.*;
 import enemigos.Pulpo;
 
+/**
+ * Clase principal encargada de administrar la lógica del nivel.
+ *
+ * Coordina los personajes, enemigos, escenario, controles,
+ * colisiones, habilidades y actualización gráfica del videojuego.
+ *
+ * También demuestra el uso de herencia y polimorfismo al trabajar
+ * con objetos de las clases derivadas de Pez.
+ */
 public class Nivel extends JPanel {
+
+    // Componentes encargados de administrar los elementos del escenario.
     private final Burbujas burbujas = new Burbujas();
     private final Algas algas = new Algas();
     private final Paredes paredes = new Paredes();
     private final Escenario escenario = new Escenario();
     private final Botones botones = new Botones();
     private final Camara camara = new Camara();
+
+    // Instancias de las clases derivadas de Pez.
     private Anguila anguila;
     private Globo globo;
     private Betta betta;
+
+    /**
+     * Referencia de tipo Pez que permite trabajar con diferentes
+     * objetos derivados de la clase base.
+     *
+     * Se utiliza polimorfismo para seleccionar y controlar
+     * cualquiera de los personajes desde una misma referencia.
+     */
     private Pez seleccionado;
+
     private Pulpo pulpo;
     private int nivel = 1, tiempo, fotogramas, rebote;
     private final int inicioX = 145, inicioY = 260, suelo = 410;
@@ -25,12 +48,24 @@ public class Nivel extends JPanel {
 
     public Nivel() {
         setFocusable(true);
+
+        /**
+         * Instanciación de las clases derivadas.
+         *
+         * Cada personaje se crea mediante su propio constructor,
+         * heredando los atributos y comportamientos definidos en Pez.
+         */
         anguila = new Anguila(inicioX, inicioY);
         globo = new Globo(inicioX, inicioY);
         betta = new Betta(inicioX, inicioY);
+
+        // La referencia de tipo Pez almacena inicialmente una Anguila.
         seleccionado = anguila;
+
         crearEnemigo();
         new Timer(16, e -> actualizar()).start();
+
+        // Administrador de controles del teclado.
         addKeyListener(new KeyAdapter() {
             public void keyPressed(KeyEvent e) {
                 switch (e.getKeyCode()) {
@@ -43,6 +78,8 @@ public class Nivel extends JPanel {
                 }
             }
         });
+
+        // Administrador de interacciones con el mouse.
         addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 requestFocusInWindow();
@@ -69,7 +106,16 @@ public class Nivel extends JPanel {
         SwingUtilities.invokeLater(this::requestFocusInWindow);
     }
 
+    /**
+     * Consulta el estado de movimiento del personaje seleccionado.
+     * Utiliza el método heredado isLanzado() de la clase Pez.
+     */
     private boolean volando() { return seleccionado != null && seleccionado.isLanzado(); }
+
+    /**
+     * Recibe una referencia de tipo Pez para seleccionar cualquier
+     * personaje derivado sin necesitar un método diferente para cada uno.
+     */
     private void seleccionar(Pez pez) { if (!volando() && !derrotado && !perdido) seleccionado = pez; }
 
     private void crearEnemigo() {
@@ -78,6 +124,12 @@ public class Nivel extends JPanel {
         derrotado = perdido = false;
     }
 
+    /**
+     * Activa la habilidad correspondiente según el tipo de personaje.
+     *
+     * Aunque los personajes comparten la clase base Pez,
+     * cada clase derivada proporciona sus propios métodos especializados.
+     */
     private void activarHabilidad() {
         if (!ventana || habilidad || !volando()) return;
         if (seleccionado == anguila) { anguila.electrocutar(); mensaje = "¡DESCARGA ELECTRICA!"; comprobarDescarga(); }
@@ -93,6 +145,13 @@ public class Nivel extends JPanel {
 
     private boolean colision() { return pulpo.colisiona(seleccionado); }
 
+    /**
+     * Actualiza el estado del nivel y los objetos del videojuego.
+     *
+     * Utiliza los métodos heredados de Pez para actualizar el movimiento
+     * y la posición del personaje seleccionado, independientemente
+     * de cuál de las clases derivadas se encuentre activa.
+     */
     private void actualizar() {
         burbujas.actualizar();
         camara.actualizar();
@@ -124,6 +183,13 @@ public class Nivel extends JPanel {
         mensaje = gano ? "¡PULPO DERROTADO!" : "¡PERDISTE!";
     }
 
+    /**
+     * Reinicia los objetos de las clases derivadas utilizando
+     * el método reiniciar() heredado de Pez.
+     *
+     * Esto permite reutilizar el comportamiento de reinicio
+     * definido en la clase base.
+     */
     private void repetir() {
         anguila.reiniciar(inicioX, inicioY);
         globo.reiniciar(inicioX, inicioY);
@@ -146,6 +212,16 @@ public class Nivel extends JPanel {
         rebote = 0;
     }
 
+    /**
+     * Sobrescribe el método paintComponent() de JPanel.
+     *
+     * Se encarga de representar gráficamente el escenario,
+     * los personajes, el enemigo y los elementos de interfaz.
+     *
+     * El personaje seleccionado utiliza dibujar() mediante
+     * una referencia de tipo Pez, permitiendo que cada clase
+     * derivada ejecute su propia implementación sobrescrita.
+     */
     @Override protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D fondo = (Graphics2D) g.create();

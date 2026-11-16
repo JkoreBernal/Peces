@@ -4,9 +4,18 @@ package peces;
 import java.awt.Color;
 import java.awt.Graphics;
 
-// Clase padre de todos los peces.
+/**
+ * Clase padre abstracta de todos los peces.
+ *
+ * Define los atributos y comportamientos generales que serán
+ * heredados por las clases Anguila, Globo y Betta.
+ *
+ * Permite reutilizar código y establecer una estructura común
+ * para los diferentes personajes del videojuego.
+ */
 public abstract class Pez {
 
+    // Atributos comunes que heredarán las clases derivadas.
     protected String nombre;
     protected double x, y;
     protected double velocidadX, velocidadY;
@@ -16,7 +25,11 @@ public abstract class Pez {
 
     protected final int PIXEL = 5;
 
-    // Constructor.
+    /**
+     * Constructor de la clase base.
+     * Inicializa las características comunes de cada personaje.
+     * Las clases derivadas utilizan este constructor mediante super().
+     */
     public Pez(String nombre, int x, int y,
                int velocidad, int resistencia, Color color) {
 
@@ -30,7 +43,12 @@ public abstract class Pez {
         this.lanzado = false;
     }
 
-    // Cada pez dibujará su propio sprite.
+    /**
+     * Método abstracto que obliga a las clases derivadas
+     * a implementar su propia representación gráfica.
+     *
+     * Se utiliza para aplicar polimorfismo mediante sobrescritura.
+     */
     public abstract void dibujar(Graphics g);
 
     // Lanza al personaje.
@@ -58,6 +76,7 @@ public abstract class Pez {
         lanzado = false;
     }
 
+    // Métodos de acceso para consultar atributos heredados.
     public String getNombre() {
         return nombre;
     }
@@ -70,6 +89,7 @@ public abstract class Pez {
         return y;
     }
 
+    // Métodos para modificar la posición y el movimiento.
     public void setX(double x) {
         this.x = x;
     }

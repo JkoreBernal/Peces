@@ -5,17 +5,36 @@ import java.awt.Color;
 import java.awt.Graphics;
 import habilidades.Rebote;
 
-// Clase hija que hereda de Pez.
+/**
+ * Clase derivada de Pez.
+ *
+ * Hereda los atributos y comportamientos generales de la clase base
+ * e incorpora una habilidad especializada de rebote.
+ */
 public class Betta extends Pez {
 
+    // Objeto encargado de administrar la habilidad de rebote.
     private Rebote rebote;
 
+    /**
+     * Constructor de la clase Betta.
+     *
+     * Utiliza super() para invocar el constructor de Pez
+     * e inicializar los atributos heredados.
+     *
+     * También inicializa el objeto encargado de la habilidad de rebote.
+     */
     public Betta(int x, int y) {
         super("Betta", x, y, 0, 150, Color.RED);
         rebote = new Rebote();
     }
 
-    // Dibuja el sprite del pez Betta.
+    /**
+     * Sobrescribe el método abstracto dibujar() heredado de Pez.
+     *
+     * Implementa la representación gráfica específica del pez Betta
+     * mediante un sprite personalizado.
+     */
     @Override
     public void dibujar(Graphics g) {
 
@@ -61,18 +80,22 @@ public class Betta extends Pez {
         }
     }
 
+    // Activa la habilidad de rebote.
     public void activarRebote() {
         rebote.activar();
     }
 
+    // Desactiva la habilidad de rebote.
     public void desactivarRebote() {
         rebote.desactivar();
     }
 
+    // Consulta si la habilidad de rebote se encuentra activa.
     public boolean tieneRebote() {
         return rebote.estaActiva();
     }
 
+    // Calcula la velocidad resultante mediante la habilidad de rebote.
     public double calcularRebote(double velocidad) {
         return rebote.calcularRebote(velocidad);
     }

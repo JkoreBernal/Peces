@@ -7,8 +7,15 @@ import java.awt.Graphics2D;
 import java.awt.BasicStroke;
 import habilidades.Electricidad;
 
+/**
+ * Clase derivada de Pez.
+ *
+ * Hereda los atributos y comportamientos generales de la clase base
+ * e incorpora la habilidad especial de electricidad.
+ */
 public class Anguila extends Pez {
 
+    // Objeto encargado de administrar la habilidad eléctrica.
     private Electricidad electricidad;
 
     // Sprite de la anguila.
@@ -25,11 +32,26 @@ public class Anguila extends Pez {
         "........FFF..........."
     };
 
+    /**
+     * Constructor de la clase Anguila.
+     *
+     * Utiliza super() para invocar el constructor de Pez
+     * e inicializar los atributos heredados.
+     *
+     * También inicializa el objeto encargado de la electricidad.
+     */
     public Anguila(int x, int y) {
         super("Anguila", x, y, 0, 120, new Color(220, 190, 35));
         electricidad = new Electricidad();
     }
 
+    /**
+     * Sobrescribe el método abstracto dibujar() heredado de Pez.
+     *
+     * Implementa la representación gráfica específica de la anguila
+     * mediante un sprite y muestra las descargas eléctricas cuando
+     * su habilidad se encuentra activa.
+     */
     @Override
     public void dibujar(Graphics g) {
 
@@ -128,18 +150,22 @@ public class Anguila extends Pez {
         g.drawPolyline(puntosX, puntosY, puntosX.length);
     }
 
+    // Activa la habilidad eléctrica mediante el objeto Electricidad.
     public void electrocutar() {
         electricidad.activar();
     }
 
+    // Desactiva la habilidad eléctrica.
     public void detenerElectricidad() {
         electricidad.desactivar();
     }
 
+    // Consulta si la habilidad eléctrica está activa.
     public boolean tieneElectricidad() {
         return electricidad.estaActiva();
     }
 
+    // Obtiene la potencia configurada para la habilidad eléctrica.
     public int getPotencia() {
         return electricidad.getPotencia();
     }
