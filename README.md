@@ -1,7 +1,7 @@
 # Documentación técnica – Peces
 
 **Proyecto:** Peces  
-**Versión:** Actividad Formativa 3  
+**Versión:** Actividad Formativa 2 - 3  
 **Lenguaje:** Java 21  
 **Interfaz gráfica:** Java Swing / Java2D  
 **Arquitectura:** Programación orientada a objetos  
