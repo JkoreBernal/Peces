@@ -40,5 +40,16 @@ java -cp out Main
 ## Autor
 José Samuel Bernal Hernández
 
-## Proyecto académico
-Actividad formativa 2 – Desarrollo de una Aplicación Simple en Línea.
+## Control de versiones con Git y GitHub
+
+El proyecto utiliza Git para el control de versiones y GitHub como plataforma de alojamiento del código fuente.
+
+Se crearon ramas independientes para mantener el desarrollo de cada actividad académica:
+
+| Rama | Descripción |
+|---|---|
+| `main` | Rama principal del repositorio. |
+| `actividad-formativa-2` | Contiene la versión original del videojuego. |
+| `actividad-formativa-3` | Contiene la versión ampliada con herencia, habilidades especiales y estructura modular. |
+
+Los cambios de la Actividad Formativa 3 se registraron mediante commits y se publicaron en GitHub utilizando `git push`.
